@@ -37,7 +37,7 @@ public class BoardService {
                 .boModified(LocalDateTime.now())
                 .build();
 
-        return boardRepository.save(board);
+        return boardRepository.save(board).getId();
 
     }
 }

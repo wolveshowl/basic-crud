@@ -19,30 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class MemberController {
 
     private final MemberService memberService;
-
-    @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
-    @PostConstruct
-    public void init() {
-        Member member = MemberDto.builder()
-                .memUserId("test")
-                .memPwd("1234")
-                .build().login();
-
-        try {
-            memberService.signUp(member);
-        } catch (MemberValidateException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @GetMapping("/")
     public String main(Model model) {
@@ -60,14 +41,12 @@ public class MemberController {
         try {
             memberService.signIn(member);
             log.info("member={}", member.getMemUserid());
-            HttpSession session = request.getSession();
-
 
         } catch (MemberValidateException e) {
             throw new RuntimeException(e);
         }
 
-        return "redirect:/board/";
+        return "redirect:/board";
     }
 
 }

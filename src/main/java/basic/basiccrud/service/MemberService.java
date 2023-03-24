@@ -32,7 +32,7 @@ public class MemberService {
      * 회원 중복 검증
      */
     private void validateDuplicateMember(String userId) throws MemberValidateException {
-        Optional<Member> result = memberRepository.findByMemId(userId);
+        Optional<Member> result = memberRepository.findByMemUserid(userId);
         if (!result.isEmpty()) {
             throw new MemberValidateException("이미 존재하는 아이디입니다.");
         }
@@ -43,7 +43,7 @@ public class MemberService {
      */
     @Transactional
     public Optional<Member> signIn(Member member) throws MemberValidateException {
-        Optional<Member> findMember = memberRepository.findByMemId(member.getMemUserid());
+        Optional<Member> findMember = memberRepository.findByMemUserid(member.getMemUserid());
         if (!findMember.isPresent()) {
             findMember.orElseThrow(() -> new MemberValidateException("아이디가 올바르지 않습니다."));
             return Optional.empty();
@@ -61,7 +61,7 @@ public class MemberService {
      * 회원조회
      */
     @Transactional(readOnly = true)
-    public Member findById(Long id) {
+    public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
     }
 

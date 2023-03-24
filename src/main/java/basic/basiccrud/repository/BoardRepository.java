@@ -1,14 +1,12 @@
 package basic.basiccrud.repository;
 
 import basic.basiccrud.entity.Board;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface BoardRepository {
-    List<Board> findAll();
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardQueryRepository {
 
-    Optional<Board> findById(Long id);
 
-    Long save(Board board);
 }

@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 public class BoardController {
 
 
-    @GetMapping("/")
+    @GetMapping()
     public String boardList() {
 
         return "board/boardList";

@@ -1,18 +1,11 @@
 package basic.basiccrud.repository;
 
 import basic.basiccrud.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberQueryRepository {
 
-
-    void save(Member member);
-
-    Member findById(Long id);
-
-    List<Member> findAll();
-
-    Optional<Member> findByMemId(String userId);
+    Optional<Member> findByMemUserid(String userId);
 }
