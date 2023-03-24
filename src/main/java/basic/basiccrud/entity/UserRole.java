@@ -1,5 +1,5 @@
 package basic.basiccrud.entity;
 
-public enum AuthLevel {
+public enum UserRole {
     normal, manager
 }

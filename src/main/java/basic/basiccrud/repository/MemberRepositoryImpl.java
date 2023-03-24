@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -19,10 +20,12 @@ public class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
-    public Member findByMemId(String userId) {
-        return em.createQuery("select m from Member m where m.memUserid = :userId", Member.class)
+    public Optional<Member> findByMemId(String userId) {
+        List<Member> result = em.createQuery("select m from Member m where m.memUserid = :userId", Member.class)
                 .setParameter("userId", userId)
-                .getSingleResult();
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
     @Override

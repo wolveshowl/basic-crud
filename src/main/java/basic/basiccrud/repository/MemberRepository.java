@@ -3,6 +3,7 @@ package basic.basiccrud.repository;
 import basic.basiccrud.entity.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository {
 
@@ -13,5 +14,5 @@ public interface MemberRepository {
 
     List<Member> findAll();
 
-    Member findByMemId(String userId);
+    Optional<Member> findByMemId(String userId);
 }

@@ -4,13 +4,16 @@ import basic.basiccrud.entity.Member;
 import basic.basiccrud.exception.MemberValidateException;
 import basic.basiccrud.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -29,8 +32,8 @@ public class MemberService {
      * 회원 중복 검증
      */
     private void validateDuplicateMember(String userId) throws MemberValidateException {
-        Member result = memberRepository.findByMemId(userId);
-        if (result != null) {
+        Optional<Member> result = memberRepository.findByMemId(userId);
+        if (!result.isEmpty()) {
             throw new MemberValidateException("이미 존재하는 아이디입니다.");
         }
     }
@@ -39,8 +42,19 @@ public class MemberService {
      * 로그인
      */
     @Transactional
-    public void signIn(Member member) {
+    public Optional<Member> signIn(Member member) throws MemberValidateException {
+        Optional<Member> findMember = memberRepository.findByMemId(member.getMemUserid());
+        if (!findMember.isPresent()) {
+            findMember.orElseThrow(() -> new MemberValidateException("아이디가 올바르지 않습니다."));
+            return Optional.empty();
+        }
 
+        if (!findMember.get().getMemPwd().equals(member.getMemPwd())) {
+            findMember.orElseThrow(() -> new MemberValidateException("비밀번호가 올바르지 않습니다."));
+            return Optional.empty();
+        }
+
+        return findMember;
     }
 
     /**

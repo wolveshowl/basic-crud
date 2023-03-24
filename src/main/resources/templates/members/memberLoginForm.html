@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <form id="MemberSaveForm" th:action="@{/login}" th:object="${signMemberDto}" method="POST">
+        <input type="text" th:field="*{memUserId}" placeholder="아이디를 입력하세요">
+        <br>
+        <input type="password" th:field="*{memPwd}" placeholder="비밀번호를 입력하세요">
+        <br>
+        <button type="submit">로그인</button>
+        <br>
+        <button th:onclick="|location.href='@{/signUp}'|"></button>
+    </form>
+    </body>
+</html>

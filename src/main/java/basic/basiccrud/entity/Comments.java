@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,5 +29,8 @@ public class Comments {
     private String coContent;
     @Column(length = 1)
     private char coSecret;
+
+    private LocalDateTime coCreated;
+    private LocalDateTime coModified;
 
 }

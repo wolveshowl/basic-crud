@@ -7,8 +7,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Member {
 
 
@@ -20,31 +21,24 @@ public class Member {
     @Column(length = 30, nullable = false, unique = true)
     private String memUserid;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String memUsername;
 
     @Column(length = 30, nullable = false)
     private String memPwd;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String memNickname;
 
-    @Column(length = 20, nullable = false)
-    private String memHp;
-
-    @Column(length = 1, nullable = false)
+    @Column(length = 1)
     private char memGender;
-
-    private int memAge;
-
-    @Enumerated(EnumType.STRING)
-    private AuthLevel memLevel;
 
     private LocalDateTime memRegdate;
 
-    @Column(length = 20)
-    private String memIpAddr;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-    private LocalDateTime memLastLogDate;
+
+
 
 }
