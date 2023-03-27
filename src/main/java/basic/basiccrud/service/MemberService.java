@@ -1,10 +1,14 @@
 package basic.basiccrud.service;
 
+import basic.basiccrud.config.auth.PrincipalDetails;
 import basic.basiccrud.entity.Member;
 import basic.basiccrud.exception.MemberValidateException;
 import basic.basiccrud.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
@@ -71,5 +75,16 @@ public class MemberService {
     @Transactional(readOnly = true)
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("username={}", username);
+        Optional<Member> member = memberRepository.findByMemUserid(username);
+        if (!member.isEmpty()) {
+            return new PrincipalDetails(member.get());
+        }
+
+        return null;
     }
 }

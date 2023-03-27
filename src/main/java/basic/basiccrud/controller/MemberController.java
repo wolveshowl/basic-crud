@@ -6,17 +6,14 @@ import basic.basiccrud.exception.MemberValidateException;
 import basic.basiccrud.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,11 +21,12 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder encoder;
 
     @GetMapping("/")
     public String main(Model model) {
-        model.addAttribute("signMemberDto", new MemberDto());
-        return "members/memberLoginForm";
+        model.addAttribute("member", new MemberDto());
+        return "members/signInForm";
     }
 
     @PostMapping("/login")
@@ -46,7 +44,13 @@ public class MemberController {
             throw new RuntimeException(e);
         }
 
+
+
         return "redirect:/board";
     }
 
+    @GetMapping("/signup")
+    public String signup() {
+        return "members/memberSignUpForm";
+    }
 }

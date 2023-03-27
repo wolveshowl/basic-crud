@@ -36,7 +36,7 @@ public class Member {
     private LocalDateTime memRegdate;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private Role role;
 
 
 

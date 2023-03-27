@@ -1,8 +1,7 @@
 package basic.basiccrud.dto;
 
 import basic.basiccrud.entity.Member;
-import basic.basiccrud.entity.UserRole;
-import com.sun.istack.NotNull;
+import basic.basiccrud.entity.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,7 +22,7 @@ public class MemberDto {
 
     private char memGender;
     private LocalDateTime memRegdate;
-    private UserRole role;
+    private Role role;
 
     public Member toEntity() {
         Member member = Member.builder()
@@ -33,7 +32,7 @@ public class MemberDto {
                 .memNickname(memNickname)
                 .memGender(memGender)
                 .memRegdate(LocalDateTime.now())
-                .role(UserRole.normal)
+                .role(Role.NORMAL)
                 .build();
         return member;
     }
